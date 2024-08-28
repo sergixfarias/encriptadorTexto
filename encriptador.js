@@ -1,80 +1,83 @@
-const d = document;
-const textArea = d.querySelector(".formulario__textarea");
-const imagenMuneco = d.querySelector(".resultado__img");
-const loaderBatman = d.querySelector(".resultado__loader");
-const resultadoTitulo = d.querySelector(".resultado__titulo");
-const resultadoText = d.querySelector(".resultado__text");
-const botonEncriptar = d.querySelector(".formulario__btn");
-const botonDesencriptar = d.querySelectorAll(".formulario__btn");
-const botonCopiar = d.querySelector(".resultado__btn");
+const doc = document;
+const textareaEl = doc.querySelector(".formulario__textarea");
+const imgPlaceholder = doc.querySelector(".resultado__img");
+const loadingIndicator = doc.querySelector(".resultado__loader");
+const titleResult = doc.querySelector(".resultado__titulo");
+const textResult = doc.querySelector(".resultado__text");
+const btnEncrypt = doc.querySelector(".formulario__btn");
+const btnDecrypt = doc.querySelectorAll(".formulario__btn");
+const btnCopy = doc.querySelector(".resultado__btn");
 
-const llaves = [
+const keyPairs = [
     ["e", "enter"],
     ["i", "imes"],
     ["a", "ai"],
     ["o", "ober"],
     ["u", "ufat"],
 ];
-//Funcion para encriptar
-function ecriptarmensaje(mensaje) {
-    let mensajeEncriptado = "";
-    for (let i = 0; i < mensaje.length; i++) {
-        let letra = mensaje[i];
-        let encriptada = letra;
-        for (let j = 0; j < llaves.length; j++) {
-            if (letra === llaves[j][0]) {
-                encriptada = llaves[j][1]; // Reemplaza la letra por su equivalente encriptado
-                break; // Termina el bucle cuando se encuentra la correspondencia
+
+// Función para encriptar el mensaje
+function encryptMessage(input) {
+    let encryptedMessage = "";
+    for (let char of input) {
+        let encryptedChar = char;
+        for (let [original, replacement] of keyPairs) {
+            if (char === original) {
+                encryptedChar = replacement;
+                break;
             }
         }
-        mensajeEncriptado += encriptada;
+        encryptedMessage += encryptedChar;
     }
-
-    return mensajeEncriptado;
+    return encryptedMessage;
 }
-// function  para desencriptar
-function desencriptarMensaje(mensaje) {
-    let mensajeDesencriptado = mensaje;
-    for (let i = 0; i < llaves.length; i++) {
-        let regex = new RegExp(llaves[i][1], "g");
-        mensajeDesencriptado = mensajeDesencriptado.replace(regex, llaves[i][0]); // Reemplaza el texto encriptado por su equivalente original
+
+// Función para desencriptar el mensaje
+function decryptMessage(input) {
+    let decryptedMessage = input;
+    for (let [original, replacement] of keyPairs) {
+        let regex = new RegExp(replacement, "g");
+        decryptedMessage = decryptedMessage.replace(regex, original);
     }
-    return mensajeDesencriptado; // Devuelve el mensaje desencriptado
+    return decryptedMessage;
 }
-//Ocultar elementos dinamicamente
-textArea.addEventListener("input", (e) => {
-    imagenMuneco.style.display = "none";
-    loaderBatman.classList.remove("hidden");
-    resultadoTitulo.textContent = "Capturando Mensaje.";
-    resultadoText.textContent = "";
-});
-//Funcion del boton encriptar
-botonEncriptar.addEventListener("click", (e) => {
-    e.preventDefault();
-    let mensaje = textArea.value.toLowerCase();
-    let mensajeEncriptado = ecriptarmensaje(mensaje);
-    resultadoText.textContent = mensajeEncriptado;
-    botonCopiar.classList.remove("hidden");
-    resultadoTitulo.textContent = "El resultado es:";
+
+// Ocultar elementos dinámicamente
+textareaEl.addEventListener("input", () => {
+    imgPlaceholder.style.display = "none";
+    loadingIndicator.classList.remove("hidden");
+    titleResult.textContent = "Capturando Mensaje.";
+    textResult.textContent = "";
 });
 
-botonDesencriptar[1].addEventListener("click", (e) => {
-    e.preventDefault();
-    let mensaje = textArea.value.toLowerCase();
-    let mensajeDesencriptado = desencriptarMensaje(mensaje);
-    resultadoText.textContent = mensajeDesencriptado;
-    resultadoTitulo.textContent = "El resultado es:";
-    botonCopiar.classList.remove("hidden");
+// Función del botón de encriptar
+btnEncrypt.addEventListener("click", (event) => {
+    event.preventDefault();
+    let inputMessage = textareaEl.value.toLowerCase();
+    let encryptedMessage = encryptMessage(inputMessage);
+    textResult.textContent = encryptedMessage;
+    btnCopy.classList.remove("hidden");
+    titleResult.textContent = "El resultado es:";
 });
 
+// Función del botón de desencriptar
+btnDecrypt[1].addEventListener("click", (event) => {
+    event.preventDefault();
+    let inputMessage = textareaEl.value.toLowerCase();
+    let decryptedMessage = decryptMessage(inputMessage);
+    textResult.textContent = decryptedMessage;
+    titleResult.textContent = "El resultado es:";
+    btnCopy.classList.remove("hidden");
+});
 
-botonCopiar.addEventListener('click', () => {
-    let textoCopiado = resultadoText.textContent;
-    navigator.clipboard.writeText(textoCopiado).then(() => {
-        imagenMuneco.style.display = "block";
-        loaderBatman.classList.add("hidden");
-        resultadoTitulo.textContent = "El texto se copio";
-        botonCopiar.classList.add("hidden");
-        resultadoText.textContent = ""
+// Función del botón de copiar
+btnCopy.addEventListener('click', () => {
+    let copiedText = textResult.textContent;
+    navigator.clipboard.writeText(copiedText).then(() => {
+        imgPlaceholder.style.display = "block";
+        loadingIndicator.classList.add("hidden");
+        titleResult.textContent = "El texto se copió";
+        btnCopy.classList.add("hidden");
+        textResult.textContent = ""
     })
 });
