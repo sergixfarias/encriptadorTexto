@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encriptador de mensajes</title>
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
 </head>
 
 <body>
@@ -12,22 +16,27 @@
         <img src="./assets/img/Logo.png" alt="Logo de Alura">
     </header>
     <main>
-        <form action="">
-            <textarea name="" id="" cols="30" rows="10" placeholder="Ingrese el texto aqui"></textarea>
-            <div class="btn__container">
-                <div class="alert__msj"><img src="./assets/img/warning.png" alt="imagen de alerta"><span>Solo letras minúsculas y sin acentos</span></div>
+        <form class="formulario">
+            <textarea class="formulario__textarea" name="mensaje" cols="30" rows="10" placeholder="Ingrese el texto aqui"></textarea>
+            <div class="formulario__btn__container">
+                <div class="mensaje__alerta"><img src="./assets/img/warning.png" alt="imagen de alerta"><span>Solo letras minúsculas y sin acentos</span></div>
             </div>
-            <input type="submit" value="Encriptar">
-            <input type="submit" value="Desencriptar">
+            <div class="formulario__submit">
+                <input class="formulario__btn" type="submit" value="Encriptar">
+                <input class="formulario__btn formulario__btn__container--secundary" type="submit" value="Desencriptar">
+            </div>
         </form>
+        <aside class="resultado">
+            <img src="./assets/img/muneco.png" alt="" class="resultado__img">
+            <div class="resultado__loader hidden"></div>
+            <div class="resultado__container">
+                <h3 class="resultado__titulo">Ningún mensaje fue encontrado</h3>
+                <p class="resultado__text">Ingresa el texto que desees encriptar o desencriptar.</p>
+                <button class="resultado__btn formulario__btn__container formulario__btn__container--secundary hidden">Copiar</button>
+            </div>
+        </aside>
     </main>
-    <aside class="result">
-        <img src="./assets/img/muneco.png" alt="" class="result__img">
-        <div class="result__container">
-            <h3 class="result__title">Ningún mensaje fue encontrado</h3>
-            <p class="result__text">Ingresa el texto que desees encriptar o desencriptar.</p>
-        </div>
-    </aside>
+    <script src="./encriptador.js"></script>
 </body>
 
 </html>
