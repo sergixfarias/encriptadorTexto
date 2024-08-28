@@ -1,7 +1,10 @@
 :root {
-    --dark-blue: #0a3871;
-    --main-color: #f3f5fc;
-    --light-blue: #d8dfe8;
+    --dark-blue: #4a2c7a;
+    /* Un tono más oscuro de púrpura */
+    --main-color: #f9f6f0;
+    /* Un color beige claro */
+    --light-blue: #b9a3d0;
+    /* Un lila suave */
     --inter-font: "Inter", sans-serif;
 }
 
